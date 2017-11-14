@@ -13,6 +13,8 @@
 </head>
 
 <body ng-app="MovieApp">
+  <div ng-include="'./partials/navbar.html'"></div>
+  <div class="col-xs-8 col-xs-offset-2" ng-view></div>
   <script type="text/javascript" src="./lib/node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="./lib/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="./lib/node_modules/angular/angular.min.js"></script>
@@ -21,6 +23,13 @@
   <script type="text/javascript" src="./lib/node_modules/angular-route/angular-route.min.js"></script>
 
   <script type="text/javascript" src="./javascripts/app.js"></script>
+  <script type="text/javascript" src="./javascripts/AppConfig.js"></script>
+
+  <script type="text/javascript" src="./javascripts/controllers/AuthCtrl.js"></script>
+  <script type="text/javascript" src="./javascripts/controllers/SearchCtrl.js"></script>
+  <script type="text/javascript" src="./javascripts/controllers/RatedCtrl.js"></script>
+  <script type="text/javascript" src="./javascripts/controllers/WishlistCtrl.js"></script>
+  
 </body>
 
 </html>
