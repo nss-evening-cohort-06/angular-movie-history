@@ -1,7 +1,13 @@
 'use strict';
 
-app.run(function(FIREBASE_CONFIG){
+app.run(function($rootScope, FIREBASE_CONFIG, tmdbService){
   firebase.initializeApp(FIREBASE_CONFIG);
+
+  tmdbService.tmdbConfiguration().then((result)=>{
+    $rootScope.image_url = result.data.images.base_url;
+  }).catch((err) =>{
+    console.log("error in tmdbConfiguration", err);
+  });
 });
 
 app.config(function($routeProvider){
