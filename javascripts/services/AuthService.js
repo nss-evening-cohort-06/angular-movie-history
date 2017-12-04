@@ -7,7 +7,7 @@ app.service("AuthService", function ($window, FIREBASE_CONFIG) {
   };
 
   const isAuthenticated = () => {
-    return firebase.auth().currentUser ? true : false;
+    return getCurrentUid() ? true : false;
   };
 
   const logout = () => {
@@ -16,8 +16,11 @@ app.service("AuthService", function ($window, FIREBASE_CONFIG) {
 
   const getCurrentUid = () => {
     const localStorageKey = `firebase:authUser:${FIREBASE_CONFIG.apiKey}:[DEFAULT]`;
-    const cookie = JSON.parse($window.localStorage[localStorageKey]);
-    return cookie.uid;
+    const localStorageValue = $window.localStorage[localStorageKey];
+    if(localStorageValue){
+      return JSON.parse(localStorageValue).uid;
+    }
+    return false;
   };
 
   return { authenticateGoogle, isAuthenticated, logout, getCurrentUid };
