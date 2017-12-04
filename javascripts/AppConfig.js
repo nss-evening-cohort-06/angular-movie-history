@@ -37,10 +37,21 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, AuthService, tmdbServic
       appTo = currRoute.originalPath.indexOf('/auth') !== -1;
     }
 
-    //if not on /auth page AND not logged in redirect to /auth
     if (!appTo && !logged) {
+      //if not on /auth page AND not logged in redirect to /auth     
       event.preventDefault();
+      $rootScope.navbar = false;
       $location.path('/auth');
+    } else if (appTo && !logged){
+      //if on /auth page AND not logged in, no redirect only authentiate in navbar
+      $rootScope.navbar = false;
+    } else if (appTo && logged){
+      //if on /auth page AND logged in, redirect to search page
+      $rootScope.navbar = true;
+      $location.path('/search');
+    } else if (!appTo && logged){
+      //if not on /auth page AND logged in see other navbar
+      $rootScope.navbar = true;
     }
   });
 
