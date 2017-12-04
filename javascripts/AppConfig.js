@@ -22,10 +22,9 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, AuthService, tmdbServic
   //currRoute is information about your current route
   //prevRoute is information about the route you came from
   $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute) {
-    // checks to see if there is a current user
-    var logged = AuthService.isAuthenticated();
-
-    var appTo;
+    // checks to see if there is a cookie with a uid for this app in localstorage
+    let logged = AuthService.isAuthenticated();
+    let appTo;
 
     // to keep error from being thrown on page refresh
     if (currRoute.originalPath) {
@@ -38,10 +37,21 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, AuthService, tmdbServic
       appTo = currRoute.originalPath.indexOf('/auth') !== -1;
     }
 
-    //if not on /auth page AND not logged in redirect to /auth
     if (!appTo && !logged) {
+      //if not on /auth page AND not logged in redirect to /auth     
       event.preventDefault();
+      $rootScope.navbar = false;
       $location.path('/auth');
+    } else if (appTo && !logged){
+      //if on /auth page AND not logged in, no redirect only authentiate in navbar
+      $rootScope.navbar = false;
+    } else if (appTo && logged){
+      //if on /auth page AND logged in, redirect to search page
+      $rootScope.navbar = true;
+      $location.path('/search');
+    } else if (!appTo && logged){
+      //if not on /auth page AND logged in see other navbar
+      $rootScope.navbar = true;
     }
   });
 
