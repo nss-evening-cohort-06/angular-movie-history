@@ -1,9 +1,9 @@
 'use strict';
 
-app.controller("WishlistCtrl", function($location, $rootScope, $scope, MovieService){
+app.controller("WishlistCtrl", function($location, $rootScope, $scope, AuthService, MovieService){
   
   const getMovies = () => {
-    MovieService.getWishlistMovies($rootScope.uid).then((results) =>{
+    MovieService.getWishlistMovies(AuthService.getCurrentUid()).then((results) =>{
       $scope.movies = results;
     }).catch((err) =>{
       console.log("error in getRatedMovies", err);

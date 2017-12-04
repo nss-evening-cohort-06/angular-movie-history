@@ -1,10 +1,10 @@
 'use strict';
 
-app.controller("RatedCtrl", function($location, $rootScope, $scope, MovieService){
+app.controller("RatedCtrl", function($location, $rootScope, $scope, AuthService, MovieService){
   $scope.movies = [];
 
  const getMovies = () => {
-  MovieService.getRatedMovies($rootScope.uid).then((results) =>{
+  MovieService.getRatedMovies(AuthService.getCurrentUid()).then((results) =>{
     $scope.movies = results;
   }).catch((err) =>{
     console.log("error in getRatedMovies", err);

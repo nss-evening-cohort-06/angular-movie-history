@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller("SearchCtrl", function ($location, $rootScope, $scope, MovieService, tmdbService) {
+app.controller("SearchCtrl", function ($location, $rootScope, $scope, AuthService, MovieService, tmdbService) {
   $scope.movies = [];
 
   $scope.enterPush = (event) => {
@@ -13,10 +13,8 @@ app.controller("SearchCtrl", function ($location, $rootScope, $scope, MovieServi
     }
   };
 
-
-
   $scope.saveRated = (tmdbMovie) => {
-    tmdbMovie.uid = $rootScope.uid;
+    tmdbMovie.uid = AuthService.getCurrentUid();
     tmdbMovie.isWatched = true;
     tmdbMovie.rating = 0;
     let newMovie = MovieService.createMovieObject(tmdbMovie);
@@ -28,7 +26,7 @@ app.controller("SearchCtrl", function ($location, $rootScope, $scope, MovieServi
   };
 
   $scope.saveWishlist = (tmdbMovie) => {
-    tmdbMovie.uid = $rootScope.uid;
+    tmdbMovie.uid = AuthService.getCurrentUid();
     tmdbMovie.isWatched = false;
     tmdbMovie.rating = 0;
     let newMovie = MovieService.createMovieObject(tmdbMovie);
@@ -38,8 +36,4 @@ app.controller("SearchCtrl", function ($location, $rootScope, $scope, MovieServi
       console.log("error in postNewMovie", err);
     });
   };
-
-
-
-
 });
